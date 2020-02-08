@@ -47,7 +47,7 @@ public class App
 		
 		return one && two;
 	}
-}
+
 
 public static void main(String[] args) {
         port(getHerokuAssignedPort());
@@ -67,17 +67,26 @@ public static void main(String[] args) {
           sc1.useDelimiter("[;\r\n]+");
           scn.useDelimiter("[;\r\n]+");
           
-          java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
+
+          //java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
+          int[] inputList = new int[10];
+          int[] inputList2 = new int[10];
+                    
+          
+          int count=0;
+          int count2=0;
           while (sc1.hasNext())
           {
             int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
-            inputList.add(value);
+            inputList[count] =value;
+            count++;
           }
           
           while (scn.hasNext())
           {
             int value = Integer.parseInt(scn.next().replaceAll("\\s",""));
-            inputList.add(value);
+            inputList2[count2]=value;
+            count2++;
           }
           
           
@@ -85,29 +94,27 @@ public static void main(String[] args) {
           
           
           System.out.println(inputList);
+           System.out.println(inputList2);
+          
 
 
           String input2 = req.queryParams("input2").replaceAll("\\s","");
           int input2AsInt = Integer.parseInt(input2);
 
-          boolean result = App.search(inputList, input2AsInt);
           
           String input3 = req.queryParams("input3").replaceAll("\\s","");
           int input3AsInt = Integer.parseInt(input3);
 
-          boolean result2 = App.search(inputList, input3AsInt);
-          
           
           String input4 = req.queryParams("input4").replaceAll("\\s","");
           int input4AsInt = Integer.parseInt(input4);
-
-          boolean result3 = App.search(inputList, input4AsInt);
           
+	   boolean result = App.func(inputList,inputList2, input2AsInt,input3AsInt,input4AsInt);
+       
 
          Map map = new HashMap();
           map.put("result", result);
-          map.put("result2", result2);
-          map.put("result3", result3);
+        
           
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());
